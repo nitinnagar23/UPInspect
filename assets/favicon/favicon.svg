@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0A2463"/>
+      <stop offset="100%" stop-color="#1B4FC4"/>
+    </linearGradient>
+  </defs>
+  <!-- Box: 36×36 brad=10, gradient bg — matches .brand-icon CSS exactly -->
+  <rect width="36" height="36" rx="10" fill="url(#bg)"/>
+  <!-- Icon: 20×20 centred in 36×36 box → offset = (36-20)/2 = 8
+       SVG paths are in 0-24 viewBox, scaled to 20px → scale = 20/24
+       All coords below are pre-multiplied: original_coord × (20/24) + 8 -->
+  <g transform="translate(8,8) scale(0.8333)">
+    <rect x="3"  y="3"  width="7" height="7" rx="1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="14" y="3"  width="7" height="7" rx="1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="3"  y="14" width="7" height="7" rx="1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M14 14h3m0 0v3m0-3 4 4"         stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,65 @@
+/* ============================================================
+   tokens.css — Design tokens & base reset
+   UPInspect
+   ============================================================ */
+
+:root {
+  /* Brand */
+  --primary:       #0A2463;
+  --primary-mid:   #1B4FC4;
+  --accent:        #00E5A0;
+  --accent-dim:    rgba(0, 229, 160, 0.15);
+  --danger:        #FF4757;
+  --warn:          #FFA502;
+  --info:          #2F86EB;
+
+  /* Surfaces — dark (default) */
+  --bg:            #080F1E;
+  --bg-2:          #0D1827;
+  --surface:       rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.07);
+  --border:        rgba(255, 255, 255, 0.09);
+  --border-accent: rgba(0, 229, 160, 0.35);
+  --text:          #EFF6FF;
+  --text-muted:    #6B85A8;
+  --text-dim:      #3A5070;
+  --input-bg:      rgba(0, 0, 0, 0.3);
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius:    16px;
+  --radius-lg: 24px;
+
+  /* Layout */
+  --nav-height: 72px;
+
+  /* Typography */
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+/* ─── Light mode overrides ─── */
+body.light {
+  --bg:            #F0F4FF;
+  --bg-2:          #E4EDFF;
+  --surface:       rgba(255, 255, 255, 0.9);
+  --surface-hover: rgba(255, 255, 255, 1);
+  --border:        rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(0, 150, 100, 0.4);
+  --text:          #0A1628;
+  --text-muted:    #4A6080;
+  --text-dim:      #8AA0C0;
+  --input-bg:      rgba(0, 0, 0, 0.05);
+  --accent:        #00B07A;
+  --accent-dim:    rgba(0, 176, 122, 0.12);
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}

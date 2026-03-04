@@ -1,0 +1,8 @@
+# Cloudflare Pages — SPA routing
+# Asset directories served directly (must come first)
+/css/*     /css/:splat     200
+/js/*      /js/:splat      200
+/assets/*  /assets/:splat  200
+
+# SPA fallback — /* matches all paths including UPI IDs containing @
+/*  /index.html  200

@@ -1,0 +1,6 @@
+name                   = "upinspect"
+compatibility_date     = "2025-09-27"
+pages_build_output_dir = "."
+
+[observability]
+enabled = true

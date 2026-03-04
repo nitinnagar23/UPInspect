@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N5DDSRMXEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N5DDSRMXEK');
+  </script>
+
+  <title>UPInspect | Decode. Verify. Pay.</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon/favicon-96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="UPInspect">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <meta name="theme-color" content="#0A2463">
+
+  <!-- SEO -->
+  <meta name="description" content="Decode any UPI QR code before you pay. View UPI ID, merchant name and amount — then choose how to proceed. Inspect first. Pay intentionally.">
+  <meta name="keywords" content="UPI, QR code scanner, UPI ID, inspect before pay, GPay, Jio, PhonePe, BHIM, Paytm">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph — WhatsApp / Facebook / LinkedIn previews -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://upinspect.pages.dev/">
+  <meta property="og:title"       content="UPInspect — Scan. Inspect. Then Pay.">
+  <meta property="og:description" content="Decode any UPI QR code before you pay. View UPI ID, merchant name and amount — then choose how to proceed.">
+  <meta property="og:image"       content="https://upinspect.pages.dev/assets/favicon/icon-512.png">
+  <meta property="og:image:width"  content="512">
+  <meta property="og:image:height" content="512">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="UPInspect — Scan. Inspect. Then Pay.">
+  <meta name="twitter:description" content="Decode any UPI QR code before you pay. Inspect first. Pay intentionally.">
+  <meta name="twitter:image"       content="https://upinspect.pages.dev/assets/favicon/icon-512.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Third-party libraries -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+
+  <!-- App Stylesheets (order matters) -->
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/views.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     MAIN CONTAINER
+     ════════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- ── Top Bar ── -->
+  <header class="top-bar">
+    <button class="brand" onclick="goHome()" onkeydown="if(event.key==='Enter'||event.key===' ')goHome()" aria-label="Go to Home" title="Go to Home">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24">
+          <rect x="3"  y="3"  width="7" height="7" rx="1.5"/>
+          <rect x="14" y="3"  width="7" height="7" rx="1.5"/>
+          <rect x="3"  y="14" width="7" height="7" rx="1.5"/>
+          <path d="M14 14h3m0 0v3m0-3 4 4"/>
+        </svg>
+      </div>
+      <span class="brand-name">UP<span>Inspect</span></span>
+    </button>
+
+    <div class="top-actions">
+      <button class="icon-btn" id="langBtn" onclick="toggleLang()" title="Toggle Language" aria-label="Toggle Language">EN</button>
+      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Theme" aria-label="Toggle Theme">
+        <svg id="themeIcon" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ════════════════════
+       HOME VIEW
+       ════════════════════ -->
+  <section id="viewHome" class="app-view active">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-eyebrow" id="txtEyebrow">Smart UPI Utility</div>
+      <h2><span id="txtHeroTitle">Decode. Verify.</span><br><span class="line2" id="txtHeroLine2">Pay Safely.</span></h2>
+      <p class="hero-sub" id="txtHeroSub">Take back control of your transactions. Reveal the hidden details inside any UPI QR code before the money leaves your account.</p>
+      <p class="hero-intent" id="txtHeroIntent">Never pay blindly again.</p>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="home-cta-group">
+      <button class="home-cta-btn home-cta-primary" onclick="navToTools('scanTab')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+        </svg>
+        <div>
+          <span class="cta-title" id="txtCtaScanTitle">Scan &amp; Pay</span>
+          <span class="cta-sub" id="txtCtaScanSub">Inspect QR codes securely</span>
+        </div>
+      </button>
+      <button class="home-cta-btn home-cta-secondary" onclick="navToTools('createTab')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+        </svg>
+        <div>
+          <span class="cta-title" id="txtCtaCreateTitle">Create Payment Links</span>
+          <span class="cta-sub" id="txtCtaCreateSub">Generate custom QR cards</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Core Capabilities -->
+    <div class="home-section-card">
+      <h3 class="home-section-title" id="txtCapTitle">Core Capabilities</h3>
+      <ul class="capability-list">
+        <li>
+          <div class="cap-icon">⚡</div>
+          <div class="cap-text"><strong id="txtCap1Title">Instant Decoding</strong><span id="txtCap1Desc">Scan with your camera or upload a QR screenshot from your gallery.</span></div>
+        </li>
+        <li>
+          <div class="cap-icon">🔍</div>
+          <div class="cap-text"><strong id="txtCap2Title">Full Transparency</strong><span id="txtCap2Desc">Instantly view the underlying UPI ID, merchant name, and requested amount.</span></div>
+        </li>
+        <li>
+          <div class="cap-icon">💸</div>
+          <div class="cap-text"><strong id="txtCap3Title">Flexible Payments</strong><span id="txtCap3Desc">Tap "Pay Now" to open your preferred app, or copy the UPI ID for manual high-value transfers.</span></div>
+        </li>
+        <li>
+          <div class="cap-icon">🔗</div>
+          <div class="cap-text"><strong id="txtCap4Title">Custom Generation</strong><span id="txtCap4Desc">Create clean, shareable payment links and professional digital QR standees.</span></div>
+        </li>
+      </ul>
+      <p class="home-note">
+        <span id="txtCapNote">UPInspect acts as your secure gateway.</span><br>
+        <strong id="txtCapNoteBold">Review the details first, then open your banking app.</strong>
+      </p>
+    </div>
+
+    <!-- Privacy -->
+    <div class="trust-card">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      </div>
+      <div>
+        <h3 id="txtTrustTitle">100% On-Device Privacy</h3>
+        <p id="txtTrustDesc">Runs entirely locally in your browser. Your scanned codes, payment data, and UPI details never touch a server.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════
+       TOOLS VIEW
+       ════════════════════ -->
+  <section id="viewTools" class="app-view">
+
+    <!-- Tab bar -->
+    <div class="tabs" id="toolTabs">
+      <button class="tab-btn active" id="tabScan" onclick="switchToolTab('scanTab', this)">
+        <svg viewBox="0 0 24 24">
+          <path d="M23 7l-7 5 7 5V7z"/>
+          <rect x="1" y="5" width="15" height="14" rx="2"/>
+        </svg>
+        <span id="txtTabScan">Scan &amp; Pay</span>
+      </button>
+      <button class="tab-btn" id="tabCreate" onclick="switchToolTab('createTab', this)">
+        <svg viewBox="0 0 24 24">
+          <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+        </svg>
+        <span id="txtTabCreate">Create Links &amp; QR</span>
+      </button>
+    </div>
+
+    <!-- ── Scan Tab ── -->
+    <div id="scanTab" class="card tool-content">
+
+      <!-- Live camera preview -->
+      <div id="scannerWrapper" class="scanner-wrap hidden">
+        <div id="reader"></div>
+        <div class="scan-overlay">
+          <div class="scan-box">
+            <div class="scan-laser"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="btn-group">
+        <button class="action-btn btn-primary" id="btnStartCam" onclick="startScanner()">
+          <svg viewBox="0 0 24 24">
+            <path d="M23 7l-7 5 7 5V7z"/>
+            <rect x="1" y="5" width="15" height="14" rx="2"/>
+          </svg>
+          <span id="txtStartCam">Scan QR</span>
+        </button>
+
+        <button class="action-btn btn-torch hidden" id="btnTorch" onclick="toggleTorch()" aria-label="Turn on torch" title="Turn on torch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 2h8l1 7H7L8 2z"/>
+            <path d="M7 9l-2 13h14L17 9"/>
+            <line x1="12" y1="13" x2="12" y2="17"/>
+          </svg>
+          <span id="txtTorchBtn">Torch</span>
+        </button>
+
+        <button class="action-btn btn-danger hidden" id="btnStopCam" onclick="stopScanner()">
+          <svg viewBox="0 0 24 24">
+            <rect x="6" y="6" width="12" height="12" rx="2"/>
+          </svg>
+          <span id="txtStopCam">Stop</span>
+        </button>
+
+        <button class="action-btn btn-outline" onclick="document.getElementById('qrFile').click()">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          <span id="txtUploadImg">Upload QR</span>
+        </button>
+
+        <!-- Hidden file input -->
+        <input type="file" id="qrFile" class="hidden" accept="image/*">
+      </div>
+
+    </div><!-- /scanTab -->
+
+    <!-- ── Create Tab ── -->
+    <div id="createTab" class="card tool-content hidden">
+
+      <form onsubmit="event.preventDefault(); generateQRCard();">
+
+        <div>
+          <label class="field-label" for="newUpiId" data-i18n-label="txtLabelUpiId">UPI ID *</label>
+          <input type="text" id="newUpiId" placeholder="e.g., name@upi" data-i18n-placeholder="txtLabelUpiId" oninput="validateUpiLive()">
+        </div>
+        <div>
+          <label class="field-label" for="newName" data-i18n-label="txtLabelName">Merchant Name <span style="opacity:0.5" data-i18n="txtOptional">(Optional)</span></label>
+          <input type="text" id="newName" placeholder="e.g., Rahul Traders" data-i18n-placeholder="txtLabelName" oninput="validateUpiLive()">
+        </div>
+        <div>
+          <label class="field-label" for="newAmount" data-i18n-label="txtLabelAmount">Amount <span style="opacity:0.5" data-i18n="txtOptional">(Optional)</span></label>
+          <input type="number" id="newAmount" placeholder="0.00" min="0" step="0.01" oninput="validateUpiLive()">
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" class="action-btn btn-primary">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <path d="M14 14h3m0 0v3m0 0h3m-3-3v3"/>
+            </svg>
+            <span id="txtGenQR">Generate QR Card</span>
+          </button>
+
+          <button type="button" class="action-btn btn-info" onclick="generateLink()">
+            <svg viewBox="0 0 24 24">
+              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+            </svg>
+            <span id="txtGenLinkBtn">Copy Link</span>
+          </button>
+
+          <button type="button" class="action-btn btn-outline btn-sm" onclick="resetCreateForm()" title="Reset form" aria-label="Reset form">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+          </button>
+        </div>
+
+      </form>
+      <!-- Generated QR Standee -->
+      <div id="qrStandee" class="standee-outer hidden">
+        <div class="qr-standee">
+
+          <!-- Logo -->
+          <div class="standee-logo-row">
+            <div class="standee-brand-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3"  y="3"  width="7" height="7" rx="1.5"/>
+                <rect x="14" y="3"  width="7" height="7" rx="1.5"/>
+                <rect x="3"  y="14" width="7" height="7" rx="1.5"/>
+                <path d="M14 14h3m0 0v3m0-3 4 4"/>
+              </svg>
+            </div>
+            <span class="standee-brand-name">UP<span>Inspect</span></span>
+          </div>
+
+          <!-- Header: name, UPI, amount -->
+          <div class="qr-standee-header">
+            <h3 id="standeeName">UPI Payment</h3>
+            <p  id="standeeUpiId" class="qr-standee-upi"></p>
+            <div id="standeeAmount" class="qr-standee-amount"></div>
+          </div>
+
+          <!-- QR code -->
+          <div id="cardQrCode"></div>
+
+          <!-- Footer -->
+          <div class="qr-standee-footer">
+            <span class="upi-apps" id="txtUpiApps">GPay &bull; PhonePe &bull; Paytm &bull; BHIM</span>
+            <span class="scan-prompt" id="txtScanPrompt">Scan to pay with any UPI app</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Standee actions -->
+      <div class="btn-group hidden" id="cardActions" style="margin-top:14px;">
+        <button class="action-btn btn-success" id="btnDownload" onclick="downloadStandee()">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          <span id="txtDownload">Save Image</span>
+        </button>
+
+        <button class="action-btn btn-info" id="btnShare" onclick="shareStandee()">
+          <svg viewBox="0 0 24 24">
+            <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+          </svg>
+          <span id="txtShareGen">Share</span>
+        </button>
+      </div>
+
+    </div><!-- /createTab -->
+
+    <!-- ── Payment Link: Quick Action Buttons ── -->
+    <div id="plActionButtons" class="pl-action-btns hidden">
+      <button class="action-btn btn-outline" onclick="plGoScan()">
+        <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        Scan | Upload QR
+      </button>
+      <button class="action-btn btn-primary" onclick="plGoCreate()">
+        <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        Create Your UPI Link
+      </button>
+    </div>
+
+    <!-- ── Extracted / Verified Card ── -->
+    <div id="extractedCard" class="extracted-card hidden">
+
+      <div class="verify-badge">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span id="extractTitle">Payment Verified</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label" id="lblUpi">UPI ID</span>
+        <div  class="detail-value mono" id="valUpiId">—</div>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label" id="lblMerchant">Merchant</span>
+        <div  class="detail-value" id="valMerchant">—</div>
+      </div>
+
+      <div class="detail-row hidden" id="groupAmount">
+        <span class="detail-label" id="lblAmount">Amount</span>
+        <div class="amount-row">
+          <!-- Display mode -->
+          <div class="amount-display" id="amountDisplay">
+            <span class="detail-value amount" id="valAmount">—</span>
+            <button class="btn-edit-amt" id="btnEditAmt" onclick="startEditAmount()" aria-label="Edit amount">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+              <span id="txtEditAmount">Edit</span>
+            </button>
+          </div>
+          <!-- Edit mode (hidden by default) -->
+          <div class="amount-edit hidden" id="amountEdit">
+            <span class="amount-prefix">₹</span>
+            <input type="number" id="editAmtInput" min="1" step="any" placeholder="Enter amount" aria-label="Enter custom amount">
+            <button class="btn-amt-confirm" onclick="confirmEditAmount()" aria-label="Confirm amount">
+              <span id="txtConfirmAmt">Confirm</span>
+            </button>
+            <button class="btn-amt-cancel" onclick="cancelEditAmount()" aria-label="Cancel edit">
+              <span id="txtCancelEdit">Cancel</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="action-btn btn-outline" onclick="copyUPI()">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+          </svg>
+          <span id="txtCopy">Copy UPI ID</span>
+        </button>
+
+        <button class="action-btn btn-success" onclick="openUPI()">
+          <svg viewBox="0 0 24 24">
+            <path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+          <span id="txtPay">Pay Now</span>
+        </button>
+      </div>
+
+    </div><!-- /extractedCard -->
+
+  </section><!-- /viewTools -->
+
+  <!-- ════════════════════
+       ABOUT VIEW
+       ════════════════════ -->
+  <section id="viewAbout" class="app-view">
+
+    <div class="about-hero">
+      <h2 id="txtAboutHeroTitle">🛡 About UPInspect</h2>
+      <p id="txtAboutHeroSub">Adding Control to QR-Based Payments</p>
+    </div>
+
+    <div class="about-block">
+      <p id="txtAboutIntro">UPInspect is a privacy-first utility that decodes UPI QR codes before initiating a transaction. Instead of blindly redirecting you to a payment app, UPInspect adds a transparent verification step so you can review the UPI ID, merchant name and requested amount, putting you completely in control of your digital payments.</p>
+    </div>
+
+    <div class="about-block features-block">
+      <h3 class="about-block-title features-title" id="txtFeaturesTitle">Features</h3>
+      <ul class="feature-list">
+        <li>
+          <div class="fi-icon">🔍</div>
+          <div class="fi-text"><strong id="txtFeat1Title">Decode &amp; Inspect</strong><span id="txtFeat1Desc">Extract and view hidden details - UPI ID, merchant name, and requested amount from any QR code before paying.</span></div>
+        </li>
+        <li>
+          <div class="fi-icon">📷</div>
+          <div class="fi-text"><strong id="txtFeat2Title">Scan or Upload</strong><span id="txtFeat2Desc">Use your device's camera for live scanning, or upload a saved QR screenshot directly from your gallery.</span></div>
+        </li>
+        <li>
+          <div class="fi-icon">🔗</div>
+          <div class="fi-text"><strong id="txtFeat3Title">Create &amp; Share</strong><span id="txtFeat3Desc">Generate custom UPI payment links and professional QR standee cards you can share anywhere.</span></div>
+        </li>
+        <li>
+          <div class="fi-icon">🔒</div>
+          <div class="fi-text"><strong id="txtFeat4Title">100% Private &amp; Local</strong><span id="txtFeat4Desc">Your payment data never leaves your device. Everything runs securely within your browser, no servers, no tracking.</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="about-block features-block" style="margin-top:20px;">
+      <h3 class="about-block-title usages-title" id="txtUsagesTitle">Usages</h3>
+      <ul class="usage-list">
+        <li>
+          <div class="fi-icon">🛡️</div>
+          <div class="fi-text"><strong id="txtUsage1Title">Fraud Prevention</strong><span id="txtUsage1Desc">Verify the actual payee identity before confirming a transfer, never pay blind again.</span></div>
+        </li>
+        <li>
+          <div class="fi-icon">🏦</div>
+          <div class="fi-text"><strong id="txtUsage2Title">Manual Banking Transfers</strong><span id="txtUsage2Desc">Copy the extracted UPI ID to handle higher-value payments through your bank's official app.</span></div>
+        </li>
+        <li>
+          <div class="fi-icon">💬</div>
+          <div class="fi-text"><strong id="txtUsage3Title">Remote Payments</strong><span id="txtUsage3Desc">Safely inspect and pay for shared QR screenshots received via WhatsApp or other chat apps.</span></div>
+        </li>
+        <li>
+          <div class="fi-icon">🧾</div>
+          <div class="fi-text"><strong id="txtUsage4Title">For Freelancers &amp; Merchants</strong><span id="txtUsage4Desc">Create clean, shareable payment links without exposing your personal phone number.</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <h3 class="faq-heading" id="txtFaqHeading">❓ FAQs</h3>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary id="txtFaq1Q">What does UPInspect actually do?</summary>
+        <p id="txtFaq1A">UPInspect decodes UPI QR codes and displays the embedded payment details before you initiate the transaction. You can then pay via your preferred UPI app, copy the UPI ID to send manually, or generate a clean payment link.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary id="txtFaq2Q">Does UPInspect process payments?</summary>
+        <p id="txtFaq2A">No. All payments are completed within your selected UPI-enabled banking or payment app. UPInspect does not handle or store funds.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary id="txtFaq3Q">Why do some QR payments show a ₹2,000 limit?</summary>
+        <p id="txtFaq3A">In certain cases, banks or UPI apps may apply transaction caps or additional checks when payments are initiated directly through QR scan flows. These limits are determined by your bank or UPI provider, not by UPInspect.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary id="txtFaq4Q">Does UPInspect bypass the ₹2,000 QR limit?</summary>
+        <p id="txtFaq4A">No. UPInspect does not bypass, override, or interfere with any bank-imposed limits. All transactions remain fully subject to your bank's rules, authentication requirements, and regulatory guidelines.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary id="txtFaq5Q">Then how does UPInspect help with higher-value payments?</summary>
+        <p id="txtFaq5A">UPInspect allows you to extract the UPI ID from a QR code and initiate payment manually through your bank's standard transfer flow. Any limits, approvals, or security checks are still enforced entirely by your bank. UPInspect only gives you flexibility in how you start the payment.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary id="txtFaq6Q">Is UPInspect compliant with UPI rules?</summary>
+        <p id="txtFaq6A">Yes. UPInspect does not alter transaction data or modify payment limits. It only decodes publicly embedded UPI QR information and allows users to proceed through official UPI apps. All transactions follow NPCI guidelines and your bank's policies.</p>
+      </details>
+    </div>
+
+
+  </section><!-- /viewAbout -->
+
+</div><!-- /container -->
+
+
+<!-- ════════════════════════════════════════════════
+     SITE FOOTER
+     ════════════════════════════════════════════════ -->
+<footer id="siteFooter" class="site-footer hidden">
+  <span>© 2026 UPInspect. All rights reserved.</span>
+  <br>
+  <span>Made with ❤️ by <a href="https://github.com/NitinNagar23" target="_blank" rel="noopener">Nitin Nagar</a></span>
+</footer>
+
+<!-- ════════════════════════════════════════════════
+     BOTTOM NAVIGATION
+     ════════════════════════════════════════════════ -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-item active" id="navHome" onclick="switchAppView('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+    </svg>
+    <span id="txtNavHome">Home</span>
+  </button>
+
+  <button class="nav-item" id="navTools" onclick="switchAppView('tools')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+    </svg>
+    <span id="txtNavTools">Tools</span>
+  </button>
+
+  <button class="nav-item" id="navAbout" onclick="switchAppView('about')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <span id="txtNavAbout">About</span>
+  </button>
+</nav>
+
+<!-- Toast notification -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- App entry point (ES module) -->
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>
