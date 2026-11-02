@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none">
+  <title>UPInspect</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A2463"/><stop offset="1" stop-color="#1B4FC4"/></linearGradient>
+  </defs>
+  <!-- Box: 36×36, rx=10, brand gradient (matches .brand-icon and share.js drawIcon) -->
+  <rect width="36" height="36" rx="10" fill="url(#bg)"/>
+  <!-- Glyph: three QR finder squares + a magnifier lens in the fourth corner.
+       Keep in sync with index.html (brand + standee) and drawIcon() in js/share.js;
+       tests/html.test.js fails if the copies drift apart. -->
+  <path fill="#fff" fill-rule="evenodd" d="M8.6 6h4.8a2.6 2.6 0 0 1 2.6 2.6v4.8a2.6 2.6 0 0 1 -2.6 2.6h-4.8a2.6 2.6 0 0 1 -2.6 -2.6v-4.8a2.6 2.6 0 0 1 2.6 -2.6zM10.1 9h1.8a1.1 1.1 0 0 1 1.1 1.1v1.8a1.1 1.1 0 0 1 -1.1 1.1h-1.8a1.1 1.1 0 0 1 -1.1 -1.1v-1.8a1.1 1.1 0 0 1 1.1 -1.1z"/>
+  <path fill="#fff" fill-rule="evenodd" d="M22.6 6h4.8a2.6 2.6 0 0 1 2.6 2.6v4.8a2.6 2.6 0 0 1 -2.6 2.6h-4.8a2.6 2.6 0 0 1 -2.6 -2.6v-4.8a2.6 2.6 0 0 1 2.6 -2.6zM24.1 9h1.8a1.1 1.1 0 0 1 1.1 1.1v1.8a1.1 1.1 0 0 1 -1.1 1.1h-1.8a1.1 1.1 0 0 1 -1.1 -1.1v-1.8a1.1 1.1 0 0 1 1.1 -1.1z"/>
+  <path fill="#fff" fill-rule="evenodd" d="M8.6 20h4.8a2.6 2.6 0 0 1 2.6 2.6v4.8a2.6 2.6 0 0 1 -2.6 2.6h-4.8a2.6 2.6 0 0 1 -2.6 -2.6v-4.8a2.6 2.6 0 0 1 2.6 -2.6zM10.1 23h1.8a1.1 1.1 0 0 1 1.1 1.1v1.8a1.1 1.1 0 0 1 -1.1 1.1h-1.8a1.1 1.1 0 0 1 -1.1 -1.1v-1.8a1.1 1.1 0 0 1 1.1 -1.1z"/>
+  <circle cx="25" cy="25" r="4.4" stroke="#00E5A0" stroke-width="2.3"/>
+  <path d="M28.4 28.4l2.9 2.9" stroke="#00E5A0" stroke-width="2.9" stroke-linecap="round"/>
+  <rect x="23.7" y="23.7" width="2.6" height="2.6" rx=".7" fill="#fff"/>
+</svg>

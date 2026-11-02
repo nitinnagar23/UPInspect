@@ -1,0 +1,12 @@
+# Cloudflare Pages: SPA routing
+# Asset paths are served directly (must come first)
+/css/*     /css/:splat     200
+/js/*      /js/:splat      200
+/assets/*  /assets/:splat  200
+/vendor/*  /vendor/:splat  200
+/sw.js     /sw.js          200
+
+# SPA fallback: /* matches all paths including UPI IDs containing @.
+# Paths that are not valid payment links are handled in the app
+# (main.js shows "This payment link is not valid" and returns to Home).
+/*  /index.html  200
